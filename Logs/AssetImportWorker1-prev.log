@@ -118,3 +118,28 @@ AssetImportParameters requested are different than current active one (requested
   custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 1920.334174 seconds.
+  path: Assets/Textures
+  artifactKey: Guid(28e348b1f47ba4c4ab6ebc94f7b313a8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Textures using Guid(28e348b1f47ba4c4ab6ebc94f7b313a8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '41d5b8408e946c0b860b9b855a68ef7c') in 0.456114 seconds 
+  Import took 0.705353 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 14.771167 seconds.
+  path: Assets/Textures/青84.jpg
+  artifactKey: Guid(b6a0d572d196868449d4ec7fdbd61769) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Textures/青84.jpg using Guid(b6a0d572d196868449d4ec7fdbd61769) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a3f10f56cbf5f2233ac401920828176e') in 1.260143 seconds 
+  Import took 1.267887 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 661.260703 seconds.
+  path: Assets/Textures/town01.jpg
+  artifactKey: Guid(480de33981824bb40a1449bcf4ec572a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Textures/town01.jpg using Guid(480de33981824bb40a1449bcf4ec572a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c33933bee1b98895c1bef60da6d59bca') in 0.101071 seconds 
+  Import took 0.187095 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
