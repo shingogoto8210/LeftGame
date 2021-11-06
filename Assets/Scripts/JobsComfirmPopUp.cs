@@ -45,7 +45,7 @@ public class JobsComfirmPopUp : MonoBehaviour
 
         this.tapPointDetail = tapPointDetail;
 
-        txtJobTime.text = (tapPointDetail.jobData.jobTime / 150).ToString("F0");
+        txtJobTime.text = tapPointDetail.jobData.jobTime.ToString("F0");
         txtJobType.text = tapPointDetail.jobData.jobType.ToString();
         txtJobTitle.text = tapPointDetail.jobData.jobTitle;
 
@@ -73,7 +73,7 @@ public class JobsComfirmPopUp : MonoBehaviour
     /// </summary>
     private void OnClickCancel()
     {
-        ClosePopUp(true);
+        ClosePopUp(false);
 
         Debug.Log("お使いには行かない");
     }
@@ -93,6 +93,11 @@ public class JobsComfirmPopUp : MonoBehaviour
             .OnComplete(() =>
             {
                 //TODO ボタン操作の結果を反映する
+                if (isSubmit)
+                {
+                    //お使いの準備開始
+                    tapPointDetail.PreparateJobs();
+                }
 
                 //Destroy(gameObject);
                 gameObject.SetActive(false);
