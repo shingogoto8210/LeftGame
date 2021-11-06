@@ -17,6 +17,11 @@ public class TapPointDetail : MonoBehaviour
 
     private JobsComfirmPopUp jobsComfirmPopUp;
 
+    [SerializeField,Header("この行き先のお使い番号")]
+    private int myjobNo;
+
+    public JobData jobData;  //お使いの情報を登録
+
     void Start()
     {
 
@@ -44,11 +49,12 @@ public class TapPointDetail : MonoBehaviour
             //行先決定用のポップアップ表示
             //Debug.Log("TapPoint 行先決定用のポップアップ表示");
             jobsComfirmPopUp = Instantiate(jobsComfirmPopUpPrefab, canvasTran, false);
+            jobsComfirmPopUp.OpenPopUp(this);
         }
         //2回目移行は，SetActiveをオンにして表示する
         else
         {
-            jobsComfirmPopUp.OpenPopUp();
+            jobsComfirmPopUp.OpenPopUp(this);
         }
         
     }

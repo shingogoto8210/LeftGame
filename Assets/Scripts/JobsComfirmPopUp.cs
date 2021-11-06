@@ -15,8 +15,25 @@ public class JobsComfirmPopUp : MonoBehaviour
     [SerializeField]
     private CanvasGroup canvasGroup;
 
-    void Start()
+    [SerializeField]
+    private Text txtJobTime;
+
+    [SerializeField]
+    private Text txtJobType;
+
+    [SerializeField]
+    private Text txtJobTitle;
+
+    private TapPointDetail tapPointDetail;
+
+    /// <summary>
+    /// ポップアップを表示する
+    /// </summary>
+    public void OpenPopUp(TapPointDetail tapPointDetail)
     {
+
+        gameObject.SetActive(true);
+
         //ボタンをすべて非活性化にする
         SwitchButtons(false);
 
@@ -25,6 +42,12 @@ public class JobsComfirmPopUp : MonoBehaviour
         btnCancel.onClick.AddListener(OnClickCancel);
 
         canvasGroup.alpha = 0.0f;
+
+        this.tapPointDetail = tapPointDetail;
+
+        txtJobTime.text = (tapPointDetail.jobData.jobTime / 150).ToString("F0");
+        txtJobType.text = tapPointDetail.jobData.jobType.ToString();
+        txtJobTitle.text = tapPointDetail.jobData.jobTitle;
 
         //ポップアップを表示して，ボタンを活性化する
         canvasGroup.DOFade(1.0f, 0.3f)
@@ -55,27 +78,7 @@ public class JobsComfirmPopUp : MonoBehaviour
         Debug.Log("お使いには行かない");
     }
 
-    /// <summary>
-    /// ポップアップを表示する
-    /// </summary>
-    public void OpenPopUp()
-    {
-
-        gameObject.SetActive(true);
-
-        //ボタンをすべて非活性化にする
-        SwitchButtons(false);
-
-        canvasGroup.alpha = 0.0f;
-
-        //ポップアップを表示して，ボタンを活性化する
-        canvasGroup.DOFade(1.0f, 0.3f)
-        .SetEase(Ease.Linear)
-        .OnComplete(() =>
-        {
-            SwitchButtons(true);
-        });
-    }
+   
     
     /// <summary>
     /// ポップアップを閉じる
