@@ -577,13 +577,14 @@ MonoBehaviour:
   myjobNo: 0
   jobData:
     jobNo: 0
-    jobTime: 1000
+    jobTime: 200
     jobTitle: GrandMotherHouse
     jobType: 0
   imgTapPoint: {fileID: 1483094315}
   jobSprite: {fileID: 21300000, guid: c05e2ace26b44c34c8012474ae4faf44, type: 3}
   defaultSprite: {fileID: 21300000, guid: e9d4143c19529834981ac6821a04aecd, type: 3}
   currentJobTime: 0
+  charaDetailPrefab: {fileID: 6832922304833431559, guid: 2bd6301ffc0936840b7c42ec72b86a00, type: 3}
 --- !u!114 &1483094314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,7 +643,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

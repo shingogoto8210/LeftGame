@@ -53,6 +53,9 @@ public class TapPointDetail : MonoBehaviour
             return isJobs;
         }
     }
+
+    [SerializeField]
+    private GameObject charaDetailPrefab;
     
 
     void Start()
@@ -148,7 +151,8 @@ public class TapPointDetail : MonoBehaviour
         //仕事終了
         Debug.Log("お使い終了");
 
-        //TODO キャラ生成
+        //キャラ生成
+        GenerateCharaDetail();
     }
 
     /// <summary>
@@ -173,5 +177,10 @@ public class TapPointDetail : MonoBehaviour
 
         //オブジェクトのサイズを初期値に戻す
         transform.localScale = Vector3.one;
+    }
+
+    private void GenerateCharaDetail()
+    {
+        Instantiate(charaDetailPrefab,transform, false);
     }
 }
