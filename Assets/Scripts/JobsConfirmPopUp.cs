@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class JobsComfirmPopUp : MonoBehaviour
+public class JobsConfirmPopUp : MonoBehaviour
 {
     [SerializeField]
     private Button btnSubmit;
@@ -26,11 +26,14 @@ public class JobsComfirmPopUp : MonoBehaviour
 
     private TapPointDetail tapPointDetail;
 
+    private GameManager gameManager;
+
     /// <summary>
     /// ポップアップを表示する
     /// </summary>
-    public void OpenPopUp(TapPointDetail tapPointDetail)
+    public void OpenPopUp(TapPointDetail tapPointDetail, GameManager gameManager)
     {
+        this.gameManager = gameManager;
 
         gameObject.SetActive(true);
 
@@ -93,11 +96,14 @@ public class JobsComfirmPopUp : MonoBehaviour
             .OnComplete(() =>
             {
                 //TODO ボタン操作の結果を反映する
-                if (isSubmit)
-                {
+                //if (isSubmit)
+                //{
                     //お使いの準備開始
-                    tapPointDetail.PreparateJobs();
-                }
+                  //  tapPointDetail.PreparateJobs();
+                //}
+
+                //GameManagerクラスのお使いの引き受け可否の選択処理を実行する
+                gameManager.JudgeSubmitJob(isSubmit, tapPointDetail);
 
                 //Destroy(gameObject);
                 gameObject.SetActive(false);

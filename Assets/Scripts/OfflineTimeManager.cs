@@ -15,6 +15,33 @@ public class OfflineTimeManager : MonoBehaviour
 
     private const string FORMAT = "yyyy/MM//dd HH:mm::ss";       //日時のフォーマット
 
+    private const string WORKING_JOB_SAVE_KEY = "workingJobNo_"; //お使い時間のデータをセーブ・ロードするための変数
+
+    private GameManager gameManager;
+
+    /// <summary>
+    /// お使い用の時間データを管理するためのクラス
+    /// </summary>
+    [Serializable]
+    public class JobTimeData
+    {
+        public int jobNo;            //お使いの通し番号
+        public int elaspedJobTime;   //お使いの残り時間
+        public string jobTimeString; //DateTimeクラスを文字列にするための変数
+        
+        /// <summary>
+        /// DateTimeを文字列で保存しているので、DateTime型に戻して取得
+        /// </summary>
+        /// <returns></returns>
+        public DateTime GetDateTime()
+        {
+            return DateTime.ParseExact(jobTimeString, FORMAT, null);
+        }
+    }
+
+    [Header("お使いの時間データのリスト")]
+    public List<JobTimeData> workingJobTimeDatasList = new List<JobTimeData>();
+
     private void Awake()
     {
         if(instance == null)
@@ -118,5 +145,49 @@ public class OfflineTimeManager : MonoBehaviour
         Debug.Log($"オフラインでの経過時間：{elaspedTime }秒");
 
         return elaspedTime;
+    }
+
+    /// <summary>
+    /// 各お使いの残り時間の更新
+    /// </summary>
+    /// <param name="jobNo"></param>
+    /// <param name="currentJobTime"></param>
+    public void UpdateCurrentJobTime(int jobNo, int currentJobTime)
+    {
+
+        //Listから該当のJobTimeDataを検索して取得し、elaspedJobTimeの値をcurrentJobTimeに更新
+        workingJobTimeDatasList.Find(x => x.jobNo == jobNo).elaspedJobTime = currentJobTime;
+    }
+
+    /// <summary>
+    /// ListにJobTimeを追加。このリストにある情報が現在お使いをしている内容になる
+    /// </summary>
+    /// <param name="jobTimeData"></param>
+    public void AddWorkingJobTimeDatasList(JobTimeData jobTimeData)
+    {
+
+        //お使いをListに追加する前に、すでにリストにあるか確認して重複登録を防ぐ
+        if(!workingJobTimeDatasList.Exists(x => x.jobNo == jobTimeData.jobNo))
+        {
+
+            //Listにない場合のみ、新しく追加する
+            workingJobTimeDatasList.Add(jobTimeData);
+
+            Debug.Log(jobTimeData.elaspedJobTime);
+        }
+    }
+
+    /// <summary>
+    /// 現在お使い中のJobTimeDataの作成とListへの追加
+    /// </summary>
+    /// <param name="tapPointDetail"></param>
+    public void CreateWorkingJobTimeDatasList(TapPointDetail tapPointDetail)
+    {
+
+        //JobTimeDataをインスタンスして初期化
+        JobTimeData jobTimeData = new JobTimeData { jobNo = tapPointDetail.jobData.jobNo, elaspedJobTime = tapPointDetail.jobData.jobTime };
+
+        //ListにJobTimeDataを追加
+        AddWorkingJobTimeDatasList(jobTimeData);
     }
 }

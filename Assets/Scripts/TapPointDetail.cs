@@ -9,13 +9,7 @@ public class TapPointDetail : MonoBehaviour
     [SerializeField]
     private Button btnTapPoint;     //Buttonコンポーネントを制御するための変数
 
-    [SerializeField]
-    private Transform canvasTran;
-
-    [SerializeField]
-    private JobsComfirmPopUp jobsComfirmPopUpPrefab;
-
-    private JobsComfirmPopUp jobsComfirmPopUp;
+    private JobsConfirmPopUp jobsComfirmPopUp;
 
     [SerializeField,Header("この行き先のお使い番号")]
     private int myjobNo;
@@ -39,6 +33,7 @@ public class TapPointDetail : MonoBehaviour
 
     private bool isJobs;           //お使い中かどうかを判定する値，trueならばお使い中として利用する
 
+
     /// <summary>
     /// isJobs変数のプロパティ
     /// </summary>
@@ -54,17 +49,20 @@ public class TapPointDetail : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private GameObject charaDetailPrefab;
-    
+    private GameManager gameManager;
 
-    void Start()
+    /// <summary>
+    /// TapPointDetailの設定
+    /// </summary>
+    /// <param name="gameManager"></param>
+    public void SetUpTapPointDetail(GameManager gameManager)
     {
-
-        //ボタンを押した際に実行する処理（メソッド）を引数にして登録
+        //ボタンを押した際に実行する処理（メソッド）を引数に指定して登録
         btnTapPoint.onClick.AddListener(OnClickTapPoint);
-    }
 
+        this.gameManager = gameManager;
+    }
+    
     /// <summary>
     /// タップポイントをタップした際の処理
     /// </summary>
@@ -80,28 +78,31 @@ public class TapPointDetail : MonoBehaviour
         transform.DOPunchScale(Vector3.one * 1.25f, 0.15f).SetEase(Ease.OutBounce);
 
         //ポップアップがまだ生成されていないとき
-        if(jobsComfirmPopUp == null)
-        {
-            //行先決定用のポップアップ表示
-            //Debug.Log("TapPoint 行先決定用のポップアップ表示");
-            jobsComfirmPopUp = Instantiate(jobsComfirmPopUpPrefab, canvasTran, false);
-            jobsComfirmPopUp.OpenPopUp(this);
-        }
+        //if(jobsComfirmPopUp == null)
+        //{
+        //行先決定用のポップアップ表示
+        //Debug.Log("TapPoint 行先決定用のポップアップ表示");
+        //jobsComfirmPopUp = Instantiate(jobsComfirmPopUpPrefab, canvasTran, false);
+        //jobsComfirmPopUp.OpenPopUp(this);
+        //}
         //2回目移行は，SetActiveをオンにして表示する
-        else
-        {
-            jobsComfirmPopUp.OpenPopUp(this);
-        }
+        //else
+        //{
+        //jobsComfirmPopUp.OpenPopUp(this);
+        //}
+
+        //GameManagerクラスにある行き先確認ポップアップを生成するメソッドを実行する
+        gameManager.GenerateJobsConfirmPopUp(this);
     }
 
     /// <summary>
     /// お使いの準備
     /// </summary>
-    public void PreparateJobs()
+    public void PreparateJobs(int remainingTime)
     {
         ChangeJobSprite();
         IsJobs = true;
-        StartCoroutine(WorkingJobs(jobData.jobTime));
+        StartCoroutine(WorkingJobs(remainingTime));
     }
 
     /// <summary>
@@ -120,19 +121,22 @@ public class TapPointDetail : MonoBehaviour
     /// <summary>
     /// お使いの開始。時間経過処理
     /// </summary>
-    /// <param name="normalJobTime"></param>
+    /// <param name="normaJobTime"></param>
     /// <returns></returns>
-    public IEnumerator WorkingJobs(int normalJobTime)
+    public IEnumerator WorkingJobs(int normaJobTime)
     {
 
         //残っているお使いの時間を設定
-        currentJobTime = normalJobTime;
+        currentJobTime = normaJobTime;
 
         //お使いが終わるかを確認
         while (IsJobs)
         {
             //TODO 条件として時間を確認する
             currentJobTime--;
+
+            OfflineTimeManager.instance.UpdateCurrentJobTime(jobData.jobNo, currentJobTime);
+
             //Debug.Log(currentJobTime);
 
             //残り時間が0以下になったら
@@ -152,7 +156,10 @@ public class TapPointDetail : MonoBehaviour
         Debug.Log("お使い終了");
 
         //キャラ生成
-        GenerateCharaDetail();
+        //GenerateCharaDetail();
+
+        //GameManagerクラスにあるキャラを生成するメソッドを実行する
+        gameManager.GenerateCharaDetail(this);
     }
 
     /// <summary>
@@ -161,6 +168,7 @@ public class TapPointDetail : MonoBehaviour
     public void KillTween()
     {
         tween.Kill();
+        //Debug.Log("tweenを止める");
     }
 
     /// <summary>
@@ -179,8 +187,8 @@ public class TapPointDetail : MonoBehaviour
         transform.localScale = Vector3.one;
     }
 
-    private void GenerateCharaDetail()
-    {
-        Instantiate(charaDetailPrefab,transform, false);
-    }
+    //private void GenerateCharaDetail()
+    //{
+      //  Instantiate(charaDetailPrefab,transform, false);
+    //}
 }
