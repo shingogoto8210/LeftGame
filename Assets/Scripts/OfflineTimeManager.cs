@@ -73,6 +73,13 @@ public class OfflineTimeManager : MonoBehaviour
         SaveOfflineDateTime();
 
         Debug.Log("ゲーム中断。時間のセーブ完了");
+
+        //お使い中のデータが１つ以上ある場合
+        for(int i = 0; i < workingJobTimeDatasList.Count; i++)
+        {
+            //お使いの時間データを1つずつ順番にすべてセーブ
+            SaveWorkingJobTimeData(workingJobTimeDatasList[i].jobNo);
+        }
     }
 
     /// <summary>
@@ -177,6 +184,12 @@ public class OfflineTimeManager : MonoBehaviour
         }
     }
 
+    public void RemoveWorkingJobTimeDatasList(int jobNo)
+    {
+        workingJobTimeDatasList.Remove(workingJobTimeDatasList[jobNo]);
+        
+    }
+
     /// <summary>
     /// 現在お使い中のJobTimeDataの作成とListへの追加
     /// </summary>
@@ -189,5 +202,65 @@ public class OfflineTimeManager : MonoBehaviour
 
         //ListにJobTimeDataを追加
         AddWorkingJobTimeDatasList(jobTimeData);
+    }
+
+    /// <summary>
+    /// お使いの時間セーブ
+    /// お使い開始時とゲーム終了時にセーブ
+    /// </summary>
+    /// <param name="jobNo"></param>
+    public void SaveWorkingJobTimeData(int jobNo)
+    {
+
+        //セーブ対象のJobTimeDataをListから検索して取得
+        JobTimeData jobTimeData = workingJobTimeDatasList.Find(x => x.jobNo == jobNo);
+
+        //今の時間を取得して文字列に変換
+        jobTimeData.jobTimeString = DateTime.Now.ToString(FORMAT);
+
+        //お使いの時間データのセーブ
+        PlayerPrefsHelper.SaveSetObjectData(WORKING_JOB_SAVE_KEY + jobTimeData.jobNo.ToString(), jobTimeData);
+
+        string str = DateTime.Now.ToString(FORMAT);
+        Debug.Log("仕事中：セーブ時間"+ str);
+        Debug.Log("セーブ時のお使いの残り時間：" + jobTimeData.elaspedJobTime);
+    }
+
+    /// <summary>
+    /// 行き先の数だけ、その行き先のJobTimeDataがあるか確認し、ある場合にはロードしてWorkingJobTimeDatasListに追加
+    /// </summary>
+    /// <param name="tapPointDetailsList"></param>
+    public void GetWorkingJobTimeDatasList(List<TapPointDetail> tapPointDetailsList)
+    {
+        for(int i = 0; i < tapPointDetailsList.Count; i++)
+        {
+            //該当するお使いの番号でセーブされている時間データがあるか確認
+            LoadOfflineJobTimeData(tapPointDetailsList[i].jobData.jobNo);
+        }
+    }
+
+    /// <summary>
+    /// お使い時間のロード
+    /// </summary>
+    /// <param name="jobNo"></param>
+    public void LoadOfflineJobTimeData(int jobNo)
+    {
+        //指定されたお使いの時間データのセーブデータがあるか確認
+        if(PlayerPrefsHelper.ExistsData(WORKING_JOB_SAVE_KEY + jobNo.ToString()))
+        {
+            //セーブデータがある場合、取得してクラスに復元
+            JobTimeData jobTimeData = PlayerPrefsHelper.LoadGetObjectData<JobTimeData>(WORKING_JOB_SAVE_KEY + jobNo.ToString());
+
+            //ListにJobTimeDataを追加
+            AddWorkingJobTimeDatasList(jobTimeData);
+
+            //文字列になっている時間をDateTime構造体に復元して取得
+            DateTime time = jobTimeData.GetDateTime();
+
+            string str = time.ToString(FORMAT);
+            Debug.Log("仕事時間：セーブされていた時間：" + str);
+            Debug.Log("ロード時の残り時間：" + jobTimeData.elaspedJobTime);
+            
+        }
     }
 }
