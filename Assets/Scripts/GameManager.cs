@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<CharaDetail> charaDetailsList = new List<CharaDetail>();      //お使い完了のキャラを束ねて管理するための変数
 
+    [SerializeField]
+    private　RewardPopUp rewardPopUpPrefab;  //褒賞表示用のポップアップのプレファブをアサインする変数。
    
     void Start()
     {
@@ -55,8 +57,12 @@ public class GameManager : MonoBehaviour
                 continue;
             }
 
+            //Debug.Log(jobTime.elaspedJobTime);
+
             //お使いの状態と残り時間を取得
             (bool isJobEnd, int remainingTime) = JudgeJobsEnd(jobTime);
+
+            Debug.Log(remainingTime);
 
             //ロードした時間とセーブした時間を計算して、まだお使いの時間が経過していない場合には、③を実行する。お使いが完了している場合には①と②を実行する
             if (isJobEnd)
@@ -157,5 +163,33 @@ public class GameManager : MonoBehaviour
         }
         //お使い未了。残り時間から経過時間を減算して残り時間にする
         return (false, remainingTime - elaspedTime);
+    }
+
+    /// <summary>
+    /// お使いの成果発表
+    /// キャラをタップすると呼び出す
+    /// </summary>
+    /// <param name="tapPointDetail"></param>
+    public void ResultJobs(TapPointDetail tapPointDetail)
+    {
+        Debug.Log("成果　発表");
+
+        //TODO お使いの難しさから褒賞決定
+
+        //TODO 褒賞ポイントを計算
+
+        //TODO 獲得した褒賞を獲得済みリストに登録。すでにある場合には所持数を加算
+
+        //TODO 獲得した褒賞のセーブ
+
+        //TODO 褒賞ポイントのセーブ
+
+        //褒賞表示用のポップアップ生成
+        //TODO 褒賞のデータを作成したら、RewardPopUpスクリプトの制御を行うため，変数に代入する処理に変更する
+        Instantiate(rewardPopUpPrefab, canvasTran, false);
+
+        //TODO 褒賞のデータを作成したら、RewardPopUpスクリプトのメソッドを実行して、褒賞のデータを引数で渡す
+
+        //TODO お使いのリストとお使いのセーブデータを削除。キャラをタップしてから消す
     }
 }

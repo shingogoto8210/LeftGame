@@ -699,6 +699,7 @@ MonoBehaviour:
   jobsConfirmPopUpPrefab: {fileID: 8775949748555473926, guid: b57606fc55810db4d8dc28140b0c911a, type: 3}
   charaDetailPrefab: {fileID: 6832922304833431557, guid: 2bd6301ffc0936840b7c42ec72b86a00, type: 3}
   charaDetailsList: []
+  rewardPopUpPrefab: {fileID: 2655483071318342944, guid: 72a0130b927aac649ab4eda1d8789678, type: 3}
 --- !u!4 &1829940756
 Transform:
   m_ObjectHideFlags: 0

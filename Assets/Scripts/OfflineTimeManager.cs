@@ -72,13 +72,13 @@ public class OfflineTimeManager : MonoBehaviour
         //現在の時間のセーブ
         SaveOfflineDateTime();
 
-        Debug.Log("ゲーム中断。時間のセーブ完了");
 
         //お使い中のデータが１つ以上ある場合
         for(int i = 0; i < workingJobTimeDatasList.Count; i++)
         {
             //お使いの時間データを1つずつ順番にすべてセーブ
             SaveWorkingJobTimeData(workingJobTimeDatasList[i].jobNo);
+            Debug.Log("ゲーム中断。時間のセーブ完了");
         }
     }
 
@@ -180,13 +180,18 @@ public class OfflineTimeManager : MonoBehaviour
             //Listにない場合のみ、新しく追加する
             workingJobTimeDatasList.Add(jobTimeData);
 
-            Debug.Log(jobTimeData.elaspedJobTime);
+            //Debug.Log(jobTimeData.elaspedJobTime);
         }
     }
 
+    /// <summary>
+    /// ListからJobTimeDataを削除し，セーブデータも削除する
+    /// </summary>
+    /// <param name="jobNo"></param>
     public void RemoveWorkingJobTimeDatasList(int jobNo)
     {
         workingJobTimeDatasList.Remove(workingJobTimeDatasList[jobNo]);
+        PlayerPrefsHelper.RemoveObjectData(WORKING_JOB_SAVE_KEY + jobNo.ToString());
         
     }
 
