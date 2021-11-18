@@ -11,13 +11,22 @@ public class RewardPopUp : MonoBehaviour
     [SerializeField]
     private CanvasGroup canvasGroup;
 
+    [SerializeField]
+    private Image imgReward;
+
+    [SerializeField]
+    private Text txtRewardPoint;
+
+    [SerializeField]
+    private Text txtRarity;
+
     void Start()
     {
         //TODO ポップアップの設定と表示。外部のスクリプトから操作できるようになると不要になる。
-        SetUpRewardPopUp();
+        //SetUpRewardPopUp();
     }
 
-    public void SetUpRewardPopUp()  //TODO 外部のスクリプトから呼び出せる準備が整ったら，そのスクリプト側が送ってくる褒賞のデータが受けとれるように引数を追加する
+    public void SetUpRewardPopUp(RewardData rewardData)  //TODO 外部のスクリプトから呼び出せる準備が整ったら，そのスクリプト側が送ってくる褒賞のデータが受けとれるように引数を追加する
     {
         //ポップアップを非表示にする
         canvasGroup.alpha = 0;
@@ -28,13 +37,16 @@ public class RewardPopUp : MonoBehaviour
         //ボタンにメソッドの登録
         btnSubmit.onClick.AddListener(OnClickCloseRewardPopUp);
 
-        //TODO 褒賞のポイント表示
+        // 褒賞のポイント表示
+        txtRewardPoint.text = rewardData.rewardPoint.ToString();
 
-        //TODO 褒賞の希少度の表示
+        // 褒賞の希少度の表示
+        txtRarity.text = rewardData.rarityType.ToString();
 
-        //TODO 褒賞の画像の設定
-
-        //TODO 表示の際の演出
+        // 褒賞の画像の設定
+        imgReward.sprite = rewardData.spriteReward;
+        
+        // 表示の際の演出
     }
 
 　　/// <summary>

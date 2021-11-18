@@ -191,7 +191,10 @@ public class OfflineTimeManager : MonoBehaviour
     /// <param name="jobNo"></param>
     public void RemoveWorkingJobTimeDatasList(int jobNo)
     {
+        //対象のお使いを照合してリストから削除
         workingJobTimeDatasList.Remove(workingJobTimeDatasList[jobNo]);
+        
+        //対象のお使いのセーブデータを削除
         PlayerPrefsHelper.RemoveObjectData(WORKING_JOB_SAVE_KEY + jobNo.ToString());
         
     }
@@ -273,5 +276,18 @@ public class OfflineTimeManager : MonoBehaviour
             Debug.Log("ロード時の残り時間：" + jobTimeData.elaspedJobTime);
             
         }
+    }
+
+    /// <summary>
+    /// デバッグ用
+    /// </summary>
+    public void AllRemoveWorkingJobTimeDatasList()
+    {
+        //リストからすべて削除
+        workingJobTimeDatasList.Clear();
+
+        //すべてのセーブデータを削除
+        PlayerPrefsHelper.AllClearSaveData();
+        //DebugManager.instance.DisplayDebugDialog("すべてのセーブデータを削除　実行");
     }
 }

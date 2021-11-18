@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
             if (isJobEnd)
             {
                 //①お使い完了。お使いのリストとセーブデータを削除　キャラをタップしてから消す
-                OfflineTimeManager.instance.RemoveWorkingJobTimeDatasList(jobTime.jobNo);
+                //OfflineTimeManager.instance.RemoveWorkingJobTimeDatasList(jobTime.jobNo);
 
                 //②キャラ生成して結果を確認
                 GenerateCharaDetail(tapPointDetailsList[i]);
@@ -193,12 +193,14 @@ public class GameManager : MonoBehaviour
         //TODO 褒賞ポイントのセーブ
 
         //褒賞表示用のポップアップ生成
-        //TODO 褒賞のデータを作成したら、RewardPopUpスクリプトの制御を行うため，変数に代入する処理に変更する
-        Instantiate(rewardPopUpPrefab, canvasTran, false);
+        // 褒賞のデータを作成したら、RewardPopUpスクリプトの制御を行うため，変数に代入する処理に変更する
+        RewardPopUp rewardPopUp = Instantiate(rewardPopUpPrefab, canvasTran, false);
+        // 褒賞のデータを作成したら、RewardPopUpスクリプトのメソッドを実行して、褒賞のデータを引数で渡す
+        rewardPopUp.SetUpRewardPopUp(rewardData);
+        //Instantiate(rewardPopUpPrefab,canvasTran,false).SetUpRewardPopUp(rewardData)でもOK
 
-        //TODO 褒賞のデータを作成したら、RewardPopUpスクリプトのメソッドを実行して、褒賞のデータを引数で渡す
-
-        //TODO お使いのリストとお使いのセーブデータを削除。キャラをタップしてから消す
+        // お使いのリストとお使いのセーブデータを削除。キャラをタップしてから消す
+        OfflineTimeManager.instance.RemoveWorkingJobTimeDatasList(tapPointDetail.jobData.jobNo);
     }
 
     /// <summary>

@@ -143,7 +143,7 @@ public class TapPointDetail : MonoBehaviour
             {
                 KillTween();
                 IsJobs = false;
-                OfflineTimeManager.instance.RemoveWorkingJobTimeDatasList(jobData.jobNo);
+                //OfflineTimeManager.instance.RemoveWorkingJobTimeDatasList(jobData.jobNo);
             }
 
             yield return null;
