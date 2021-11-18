@@ -24,7 +24,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private　RewardPopUp rewardPopUpPrefab;  //褒賞表示用のポップアップのプレファブをアサインする変数。
-   
+
+    [SerializeField]
+    private EventDataSO rewardDataSO;
+
+    [SerializeField]
+    private JobTypeRewardRatesDataSO jobTypeRewardRatesDataSO;
     void Start()
     {
         //TODO 褒賞関連の処理
@@ -62,7 +67,7 @@ public class GameManager : MonoBehaviour
             //お使いの状態と残り時間を取得
             (bool isJobEnd, int remainingTime) = JudgeJobsEnd(jobTime);
 
-            Debug.Log(remainingTime);
+            Debug.Log("WorkingJobNo"+jobTime.jobNo+"の残り時間"+remainingTime);
 
             //ロードした時間とセーブした時間を計算して、まだお使いの時間が経過していない場合には、③を実行する。お使いが完了している場合には①と②を実行する
             if (isJobEnd)
@@ -108,10 +113,7 @@ public class GameManager : MonoBehaviour
         {
 
             // お使いの登録
-            OfflineTimeManager.instance.CreateWorkingJobTimeDatasList(tapPointDetail);
-
-            // お使い開始時間のセーブ
-            OfflineTimeManager.instance.SaveWorkingJobTimeData(tapPointDetail.jobData.jobNo);
+            OfflineTimeManager.instance.CreateWorkingJobTimeDatasList(tapPointDetail,remainingTime);
 
             //お使いの準備とお使いの開始
             if(remainingTime == -1)
@@ -124,6 +126,9 @@ public class GameManager : MonoBehaviour
                 //お使いの途中の場合には、残りのお使いの時間を設定
                 tapPointDetail.PreparateJobs(remainingTime);
             }
+
+            // お使い開始時間のセーブ
+            OfflineTimeManager.instance.SaveWorkingJobTimeData(tapPointDetail.jobData.jobNo);
         }
         else
         {
@@ -147,7 +152,7 @@ public class GameManager : MonoBehaviour
 
     private(bool,int) JudgeJobsEnd(OfflineTimeManager.JobTimeData jobTimeData)
     {
-        //ゲーム起動時の時間とお使いを開始した時間との差分値を算出
+        //ゲーム起動時の時間とお使いをセーブした時間との差分値を算出
         int elaspedTime = OfflineTimeManager.instance.CalculateOfflineDateTimeElasped(jobTimeData.GetDateTime()) * 100;
         Debug.Log("お使い時間の差分：" + elaspedTime / 100 + "：秒");
 
@@ -174,7 +179,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("成果　発表");
 
-        //TODO お使いの難しさから褒賞決定
+        //お使いの難しさから褒賞決定
+        RewardData rewardData = GetLotteryForRewards(tapPointDetail.jobData.jobType);
+
+        Debug.Log("決定した褒賞の通し番号：" + rewardData.rewardNo);
 
         //TODO 褒賞ポイントを計算
 
@@ -191,5 +199,67 @@ public class GameManager : MonoBehaviour
         //TODO 褒賞のデータを作成したら、RewardPopUpスクリプトのメソッドを実行して、褒賞のデータを引数で渡す
 
         //TODO お使いのリストとお使いのセーブデータを削除。キャラをタップしてから消す
+    }
+
+    /// <summary>
+    /// お使いの褒賞の抽選
+    /// </summary>
+    /// <param name="jobType"></param>
+    /// <returns></returns>
+    private RewardData GetLotteryForRewards(JobType jobType)
+    {
+
+        //難易度による希少度の合計値を算出して、ランダムな値を抽出
+        int randomRarityValue = UnityEngine.Random.Range(0, jobTypeRewardRatesDataSO.jobTypeRewardRatesDatasList[(int)jobType].rewardRates.Sum());
+
+        Debug.Log("今回のお使いの難易度：" + jobType + "/難易度による希少度の合計値：" + jobTypeRewardRatesDataSO.jobTypeRewardRatesDatasList[(int)jobType].rewardRates.Sum());
+        Debug.Log("希少度を決定するためのランダムな値：" + randomRarityValue);
+
+        //抽選用の初期値を設定
+        RarityType rarityType = RarityType.Common;
+        int total = 0;
+
+        //抽出した値がどの希少度になるか確認
+        for (int i = 0; i < jobTypeRewardRatesDataSO.jobTypeRewardRatesDatasList.Count; i++)
+        {
+            //希少度の重みづけを行うために加算
+            total += jobTypeRewardRatesDataSO.jobTypeRewardRatesDatasList[(int)jobType].rewardRates[i];
+            Debug.Log("希少度を決定するためのランダムな値：" + randomRarityValue + "<=" + "希少度の重み付の合計値：" + total); ;
+            
+        //totalの値がどの希少度に該当するかを順番に確認
+        if(randomRarityValue <= total)
+            {
+                //希少度を決定
+                rarityType = (RarityType)i;
+                break;
+            }
+        }
+
+        Debug.Log("今回の希少度：" + rarityType);
+
+        //今回対象となる希少度のデータだけのリストを作成
+        List<RewardData> rewardDatas = new List<RewardData>(rewardDataSO.rewardDatasList.Where(x => x.rarityType == rarityType).ToList());
+
+        //同じ希少度の褒賞の提供割合の値の合計値を算出して、ランダムな値を抽出
+        int randomRewardValue = UnityEngine.Random.Range(0, rewardDatas.Select(x => x.rarityRate).ToArray().Sum());
+
+        Debug.Log("希少度内の褒賞用のランダムな値：" + randomRewardValue);
+
+        total = 0;
+
+        //抽出した値がどの褒賞になるか確認
+        for (int i = 0; i < rewardDatas.Count; i++)
+        {
+            //totalの値が褒賞に該当するまで加算
+            total += rewardDatas[i].rarityRate;
+            Debug.Log("希少度内の褒賞用のランダムな値：" + randomRewardValue + "<=" + "褒賞の重みづけの合計値："+total);
+
+            if(randomRewardValue <= total)
+            {
+                //褒賞確定
+                return rewardDatas[i];
+            }
+        }
+        return null;
     }
 }

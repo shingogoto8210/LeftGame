@@ -575,7 +575,7 @@ MonoBehaviour:
   myjobNo: 0
   jobData:
     jobNo: 0
-    jobTime: 200
+    jobTime: 2000
     jobTitle: GrandMotherHouse
     jobType: 0
   imgTapPoint: {fileID: 1483094315}
@@ -700,6 +700,8 @@ MonoBehaviour:
   charaDetailPrefab: {fileID: 6832922304833431557, guid: 2bd6301ffc0936840b7c42ec72b86a00, type: 3}
   charaDetailsList: []
   rewardPopUpPrefab: {fileID: 2655483071318342944, guid: 72a0130b927aac649ab4eda1d8789678, type: 3}
+  rewardDataSO: {fileID: 11400000, guid: 1b51a7528d665ed44a48203302afd8e1, type: 2}
+  jobTypeRewardRatesDataSO: {fileID: 11400000, guid: 01471a0712bd3524c91b07b75736b5c4, type: 2}
 --- !u!4 &1829940756
 Transform:
   m_ObjectHideFlags: 0

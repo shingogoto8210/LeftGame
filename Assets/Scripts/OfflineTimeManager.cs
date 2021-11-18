@@ -144,15 +144,16 @@ public class OfflineTimeManager : MonoBehaviour
         }
 
         //経過した時間の差分
-        TimeSpan dateTImeElasped = currentDateTime - oldDateTime;
+        TimeSpan dateTimeElasped = currentDateTime - oldDateTime;
 
         //経過時間を秒にする（Math.Round メソッドを利用して、double型をint型に変換。小数点は０のくらいで，数値の丸め処理の指定はToEven（数値が２つの数値の中間に位置するときに、最も近い偶然の値）を指定）
-        elaspedTime = (int)Math.Round(dateTImeElasped.TotalSeconds, 0, MidpointRounding.ToEven);
+        elaspedTime = (int)Math.Round(dateTimeElasped.TotalSeconds, 0, MidpointRounding.ToEven);
 
         Debug.Log($"オフラインでの経過時間：{elaspedTime }秒");
 
         return elaspedTime;
     }
+
 
     /// <summary>
     /// 各お使いの残り時間の更新
@@ -199,11 +200,16 @@ public class OfflineTimeManager : MonoBehaviour
     /// 現在お使い中のJobTimeDataの作成とListへの追加
     /// </summary>
     /// <param name="tapPointDetail"></param>
-    public void CreateWorkingJobTimeDatasList(TapPointDetail tapPointDetail)
+    public void CreateWorkingJobTimeDatasList(TapPointDetail tapPointDetail, int remainingTime)
     {
+        if(remainingTime == -1)
+        {
+            remainingTime = tapPointDetail.jobData.jobTime;
+        }
+
 
         //JobTimeDataをインスタンスして初期化
-        JobTimeData jobTimeData = new JobTimeData { jobNo = tapPointDetail.jobData.jobNo, elaspedJobTime = tapPointDetail.jobData.jobTime };
+        JobTimeData jobTimeData = new JobTimeData { jobNo = tapPointDetail.jobData.jobNo, elaspedJobTime = remainingTime };
 
         //ListにJobTimeDataを追加
         AddWorkingJobTimeDatasList(jobTimeData);

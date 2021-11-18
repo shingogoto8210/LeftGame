@@ -33,7 +33,6 @@ public class TapPointDetail : MonoBehaviour
 
     private bool isJobs;           //お使い中かどうかを判定する値，trueならばお使い中として利用する
 
-
     /// <summary>
     /// isJobs変数のプロパティ
     /// </summary>

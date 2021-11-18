@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aece9e980f5413642ae28af511e08754, type: 3}
+  m_Name: RewardDataList
+  m_EditorClassIdentifier: 
+  rewardDatasList:
+  - rewardNo: 0
+    rarityType: 0
+    rarityRate: 50
+    spriteReward: {fileID: 0}
+    rewardPoint: 10
+  - rewardNo: 1
+    rarityType: 0
+    rarityRate: 30
+    spriteReward: {fileID: 0}
+    rewardPoint: 20
+  - rewardNo: 2
+    rarityType: 0
+    rarityRate: 20
+    spriteReward: {fileID: 0}
+    rewardPoint: 30
+  - rewardNo: 3
+    rarityType: 1
+    rarityRate: 60
+    spriteReward: {fileID: 0}
+    rewardPoint: 100
+  - rewardNo: 4
+    rarityType: 1
+    rarityRate: 40
+    spriteReward: {fileID: 0}
+    rewardPoint: 130
+  - rewardNo: 5
+    rarityType: 2
+    rarityRate: 100
+    spriteReward: {fileID: 0}
+    rewardPoint: 500
