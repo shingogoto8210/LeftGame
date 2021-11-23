@@ -16,30 +16,30 @@ MonoBehaviour:
   - rewardNo: 0
     rarityType: 0
     rarityRate: 50
-    spriteReward: {fileID: 0}
+    spriteReward: {fileID: 21300000, guid: c183a63af4ceb934896221b6a941b8e5, type: 3}
     rewardPoint: 10
   - rewardNo: 1
     rarityType: 0
     rarityRate: 30
-    spriteReward: {fileID: 0}
+    spriteReward: {fileID: 21300000, guid: 508ebb3d24888654991953286b4f2738, type: 3}
     rewardPoint: 20
   - rewardNo: 2
     rarityType: 0
     rarityRate: 20
-    spriteReward: {fileID: 0}
+    spriteReward: {fileID: 21300000, guid: 8af753f805bff544fa2667150d5743c1, type: 3}
     rewardPoint: 30
   - rewardNo: 3
     rarityType: 1
     rarityRate: 60
-    spriteReward: {fileID: 0}
+    spriteReward: {fileID: 21300000, guid: 2a33303f47496bf4ba12986a41efd4d2, type: 3}
     rewardPoint: 100
   - rewardNo: 4
     rarityType: 1
     rarityRate: 40
-    spriteReward: {fileID: 0}
+    spriteReward: {fileID: 21300000, guid: 08329a5257418254f948b763414c88ea, type: 3}
     rewardPoint: 130
   - rewardNo: 5
     rarityType: 2
     rarityRate: 100
-    spriteReward: {fileID: 0}
+    spriteReward: {fileID: 21300000, guid: b5f7257fe038e0d48bee963b258f7a68, type: 3}
     rewardPoint: 500

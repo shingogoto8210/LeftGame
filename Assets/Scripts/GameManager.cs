@@ -32,7 +32,13 @@ public class GameManager : MonoBehaviour
     private JobTypeRewardRatesDataSO jobTypeRewardRatesDataSO;
     void Start()
     {
-        //TODO 褒賞関連の処理
+        //TODO 褒賞データの最大数をGameDataクラスに登録
+
+        //TODO 獲得している褒賞データの確認とロード
+
+        //TODO 獲得している褒賞データがある場合
+
+        //TODO 褒賞ポイントのロード
 
         // お使いの時間データの確認とロード
         OfflineTimeManager.instance.GetWorkingJobTimeDatasList(tapPointDetailsList);
@@ -184,13 +190,17 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("決定した褒賞の通し番号：" + rewardData.rewardNo);
 
-        //TODO 褒賞ポイントを計算
+        // 褒賞ポイントを計算
+        GameData.instance.CalculateTotalRewardPoint(rewardData.rewardPoint);
 
-        //TODO 獲得した褒賞を獲得済みリストに登録。すでにある場合には所持数を加算
+        // 獲得した褒賞を獲得済みリストに登録。すでにある場合には所持数を加算
+        GameData.instance.AddEarnedRewardsList(rewardData.rewardNo);
 
-        //TODO 獲得した褒賞のセーブ
-
-        //TODO 褒賞ポイントのセーブ
+        // 獲得した褒賞のセーブ
+        GameData.instance.SaveEarnedReward(rewardData.rewardNo);
+        
+        // 褒賞ポイントのセーブ
+        GameData.instance.SaveTotalPoint();
 
         //褒賞表示用のポップアップ生成
         // 褒賞のデータを作成したら、RewardPopUpスクリプトの制御を行うため，変数に代入する処理に変更する

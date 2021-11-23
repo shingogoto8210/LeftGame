@@ -447,6 +447,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1396170998}
   m_CullTransparentMesh: 1
+--- !u!1 &1462010805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1462010807}
+  - component: {fileID: 1462010806}
+  m_Layer: 0
+  m_Name: GameData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1462010806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462010805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88b2c1aff3ebfe045b54efc9726ead6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  earnedRewardsList: []
+  totalRewardPoint: 0
+--- !u!4 &1462010807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462010805}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0643662, y: -1.6755425, z: 119.934715}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1466741460
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,9 +620,9 @@ MonoBehaviour:
   myjobNo: 0
   jobData:
     jobNo: 0
-    jobTime: 2000
+    jobTime: 100
     jobTitle: GrandMotherHouse
-    jobType: 0
+    jobType: 2
   imgTapPoint: {fileID: 1483094315}
   jobSprite: {fileID: 21300000, guid: c05e2ace26b44c34c8012474ae4faf44, type: 3}
   defaultSprite: {fileID: 21300000, guid: e9d4143c19529834981ac6821a04aecd, type: 3}

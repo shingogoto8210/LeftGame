@@ -419,7 +419,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 350}
-  m_SizeDelta: {x: 500, y: 700}
+  m_SizeDelta: {x: 800, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2655483072387869563
 CanvasRenderer:
@@ -626,7 +626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6294674727993508985, guid: 0c89ef565a697a644ad5d22385d6f416, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 600
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 6294674727993508985, guid: 0c89ef565a697a644ad5d22385d6f416, type: 3}
       propertyPath: m_SizeDelta.y
@@ -682,7 +682,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7905452855015638015, guid: 0c89ef565a697a644ad5d22385d6f416, type: 3}
       propertyPath: m_Text
-      value: "\u8912\u8CDE\u306E\u540D\u524D"
+      value: "\u8A0E\u4F10\u3057\u305F\u30E2\u30F3\u30B9\u30BF\u30FC\u306E\u540D\u524D"
       objectReference: {fileID: 0}
     - target: {fileID: 7905452855015638015, guid: 0c89ef565a697a644ad5d22385d6f416, type: 3}
       propertyPath: m_FontData.m_MaxSize
@@ -791,7 +791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6294674727993508985, guid: 0c89ef565a697a644ad5d22385d6f416, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -91.5
+      value: -117
       objectReference: {fileID: 0}
     - target: {fileID: 6294674727993508985, guid: 0c89ef565a697a644ad5d22385d6f416, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -932,7 +932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7905452855015638015, guid: 0c89ef565a697a644ad5d22385d6f416, type: 3}
       propertyPath: m_Text
-      value: "\u304A\u4F7F\u3044\u5B8C\u4E86\uFF01"
+      value: "\u8A0E\u4F10\u5B8C\u4E86\uFF01"
       objectReference: {fileID: 0}
     - target: {fileID: 7905452855015638015, guid: 0c89ef565a697a644ad5d22385d6f416, type: 3}
       propertyPath: m_Color.b
