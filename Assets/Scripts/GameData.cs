@@ -26,6 +26,8 @@ public class GameData : MonoBehaviour
 
     private const string TOTAL_POINT_SAVE_KEY = "totalPoint";
 
+    private int maxRewardDataCount;
+
 
 
     // Start is called before the first frame update
@@ -100,15 +102,61 @@ public class GameData : MonoBehaviour
     public void SaveEarnedReward(int rewardNo)
     {
         //EarnedReward earnedReward = earnedRewardsList.Find(x => x.rewardNo == rewardNo);
-        PlayerPrefsHelper.SaveSetObjectData<EarnedReward>(EARNED_REWARD_SAVE_KEY + rewardNo,earnedRewardsList.Find(x => x.rewardNo == rewardNo));
-        Debug.Log("獲得した褒賞をセーブ : rewardNo" + rewardNo +"を"+ earnedRewardsList.Find(x => x.rewardNo == rewardNo).rewardCount + "体獲得" );
+        PlayerPrefsHelper.SaveSetObjectData<EarnedReward>(EARNED_REWARD_SAVE_KEY + rewardNo, earnedRewardsList.Find(x => x.rewardNo == rewardNo));
+        Debug.Log("獲得した褒賞をセーブ : rewardNo" + rewardNo + "を" + earnedRewardsList.Find(x => x.rewardNo == rewardNo).rewardCount + "体獲得");
+    }
+    
+    /// <summary>
+    /// 褒賞ポイントのロード
+    /// </summary>
+    public void LoadTotalRewardPoint()
+    {
+        totalRewardPoint = PlayerPrefsHelper.LoadIntData(TOTAL_POINT_SAVE_KEY);
+    }
 
+    /// <summary>
+    /// 褒賞データの最大数の登録
+    /// </summary>
+    /// <param name="maxCount"></param>
+    public void GetMaxRewardDataCount(int maxCount)
+    {
+        maxRewardDataCount = maxCount;
+    }
+
+    /// <summary>
+    /// 獲得した褒賞データのロード
+    /// </summary>
+    /// <param name="rewardNo"></param>
+    public void LoadEarnedReward()
+    {
+        //褒賞のデータベースに登録されているすべての褒賞のデータを１つずつ順番に確認
+        for (int i = 0; i < maxRewardDataCount; i++)
+        {
+            //データベースにある褒賞のデータが、セーブされている褒賞のデータとして存在しているか確認
+            if (PlayerPrefsHelper.ExistsData(EARNED_REWARD_SAVE_KEY + i))
+            {
+                //セーブデータがある場合のみロード
+                EarnedReward earnedReward = PlayerPrefsHelper.LoadGetObjectData<EarnedReward>(EARNED_REWARD_SAVE_KEY + i);
+
+                //リストに追加
+                AddEarnedRewardsList(earnedReward.rewardNo, earnedReward.rewardCount);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 獲得している褒賞データの最大数の取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetEarnedRewardsListCount()
+    {
+        return earnedRewardsList.Count;
     }
 
     /// <summary>
     /// 褒賞ポイントのセーブ
     /// </summary>
-    public void SaveTotalPoint()
+    public void SaveTotalRewardPoint()
     {
         PlayerPrefsHelper.SaveIntData(TOTAL_POINT_SAVE_KEY, totalRewardPoint);
         Debug.Log("褒賞ポイントをセーブ：totalRewardPoint:" + GameData.instance.totalRewardPoint);
