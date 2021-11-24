@@ -30,6 +30,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private JobTypeRewardRatesDataSO jobTypeRewardRatesDataSO;
+
+    [SerializeField]
+    private UnityEngine.UI.Button btnAlbum;
+
+    [SerializeField]
+    private AlbumPopUp albumPopUpPrefab;
+
+    private AlbumPopUp albumPopUp;
+
     void Start()
     {
         // 褒賞データの最大数をGameDataクラスに登録
@@ -50,6 +59,8 @@ public class GameManager : MonoBehaviour
         
         //各TapPointDetailの設定
         TapPointSetUp();
+
+        btnAlbum.onClick.AddListener(OnClickAlbum);
     }
     
     /// <summary>
@@ -278,5 +289,33 @@ public class GameManager : MonoBehaviour
             }
         }
         return null;
+    }
+
+    //アルバムボタンを押した際の動作
+    private void OnClickAlbum()
+    {
+
+        //アルバムポップアップがまだ生成されていなければ
+        if (albumPopUp == null)
+        {
+            //アルバムボタンをアニメ演出する
+            btnAlbum.transform.DOPunchScale(Vector3.one * 1.1f, 0.1f).SetEase(Ease.InOutQuart);
+
+            //アルバムポップアップを生成する。変数に代入することにより、ボタンの重複タップによる複数のアルバムポップアップの生成を防止する
+            albumPopUp = Instantiate(albumPopUpPrefab, canvasTran, false);
+
+            //生成したアルバムポップアップの設定を行うためのメソッドを実行し、必要な情報を引数で渡す
+            albumPopUp.SetUpAlbumPopUp(this, canvasTran.position, btnAlbum.transform.position);
+        }
+    }
+
+    /// <summary>
+    /// RewardNoからRewardDataを取得
+    /// </summary>
+    /// <param name="rewardNo"></param>
+    /// <returns></returns>
+    public RewardData GetRewardDataFromRewardNo(int rewardNo)
+    {
+        return rewardDataSO.rewardDatasList.Find(x => x.rewardNo == rewardNo);
     }
 }
