@@ -11,6 +11,18 @@ public class AlbumPopUp : MonoBehaviour
     [SerializeField]
     private Button btnClose;
 
+    [SerializeField]
+    private Image imgReward;
+
+    [SerializeField]
+    private RewardDetail rewardDetailPrefab;
+
+    [SerializeField]
+    private Transform rewardDetailTran;
+
+    [SerializeField]
+    private List<RewardDetail> rewardDetailList = new List<RewardDetail>();
+
     /// <summary>
     /// AlbumPopUpの設定と表示
     /// </summary>
@@ -39,15 +51,26 @@ public class AlbumPopUp : MonoBehaviour
         //ポップアップを徐々に大きくしながら表示。指定したサイズになったら、元のポップアップの大きさに戻す
         sequence.Join(transform.DOScale(Vector2.one * 1.2f, 0.5f).SetEase(Ease.InBack)).OnComplete(() => { transform.DOScale(Vector2.one, 0.2f); });
 
-        //TODO 獲得している褒賞の数だけサムネイル用のゲームオブジェクトの生成処理を繰り返す
+        // 獲得している褒賞の数だけサムネイル用のゲームオブジェクトの生成処理を繰り返す
+        for (int i = 0; i < GameData.instance.GetEarnedRewardsListCount(); i++)
+        {
+            // 獲得している褒賞用のゲームオブジェクト（サムネイル用）を生成 
+            RewardDetail rewardDetail = Instantiate(rewardDetailPrefab, rewardDetailTran, false);
 
-        //TODO 獲得している褒賞用のゲームオブジェクト（サムネイル用）を生成 
-        
-        //TODO サムネイル用のゲームオブジェクトに利用する褒賞のデータを取得して設定
-        
-        //TODO 初期画像の設定
-        
-        //TODO 褒賞一覧のListに登録
+
+            // サムネイル用のゲームオブジェクトに利用する褒賞のデータを取得して設定
+            rewardDetail.SetUpRewardDetail(gameManager.GetRewardDataFromRewardNo(i), this);
+            
+            // 初期画像の設定
+            if (rewardDetailList.Count == 0)
+            {
+                imgReward.sprite = gameManager.GetRewardDataFromRewardNo(i).spriteReward;
+            }
+
+            // 褒賞一覧のListに登録
+            rewardDetailList.Add(rewardDetail);
+
+        }
     }
 
     private void OnClickCloseAlbumPopUp()
@@ -60,6 +83,14 @@ public class AlbumPopUp : MonoBehaviour
 
         //それに合わせてポップアップをアルバムボタンの位置に移動させる。移動後にポップアップを破壊
         sequence.Join(transform.DOMove(closePos, 0.3f).SetEase(Ease.Linear)).OnComplete(() => Destroy(gameObject));
+    }
 
+    /// <summary>
+    /// アルバム一覧で選択された褒賞の画像をポップアップに表示
+    /// </summary>
+    /// <param name="spriteReward"></param>
+    public void DisplayReward(Sprite spriteReward)
+    {
+        imgReward.sprite = spriteReward;
     }
 }

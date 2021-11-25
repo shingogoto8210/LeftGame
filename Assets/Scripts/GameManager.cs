@@ -219,8 +219,9 @@ public class GameManager : MonoBehaviour
         GameData.instance.SaveTotalRewardPoint();
 
         //褒賞表示用のポップアップ生成
-        // 褒賞のデータを作成したら、RewardPopUpスクリプトの制御を行うため，変数に代入する処理に変更する
+        //褒賞のデータを作成したら、RewardPopUpスクリプトの制御を行うため，変数に代入する処理に変更する
         RewardPopUp rewardPopUp = Instantiate(rewardPopUpPrefab, canvasTran, false);
+
         // 褒賞のデータを作成したら、RewardPopUpスクリプトのメソッドを実行して、褒賞のデータを引数で渡す
         rewardPopUp.SetUpRewardPopUp(rewardData);
         //Instantiate(rewardPopUpPrefab,canvasTran,false).SetUpRewardPopUp(rewardData)でもOK
