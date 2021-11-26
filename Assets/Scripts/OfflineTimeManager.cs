@@ -150,6 +150,7 @@ public class OfflineTimeManager : MonoBehaviour
         elaspedTime = (int)Math.Round(dateTimeElasped.TotalSeconds, 0, MidpointRounding.ToEven);
 
         Debug.Log($"オフラインでの経過時間：{elaspedTime }秒");
+        DebugManager.instance.DisplayDebugDialog($"オフラインでの経過時間：{elaspedTime }秒");
 
         return elaspedTime;
     }

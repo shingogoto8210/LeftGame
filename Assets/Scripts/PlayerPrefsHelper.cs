@@ -73,6 +73,7 @@ public static class PlayerPrefsHelper
         PlayerPrefs.DeleteAll();
 
         Debug.Log("全セーブデータを削除　実行");
+        DebugManager.instance.DisplayDebugDialog("全セーブデータを削除　実行");
     }
 
     /// <summary>

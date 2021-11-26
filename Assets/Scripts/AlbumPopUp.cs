@@ -59,12 +59,15 @@ public class AlbumPopUp : MonoBehaviour
 
 
             // サムネイル用のゲームオブジェクトに利用する褒賞のデータを取得して設定
-            rewardDetail.SetUpRewardDetail(gameManager.GetRewardDataFromRewardNo(i), this);
+            rewardDetail.SetUpRewardDetail(gameManager.GetRewardDataFromRewardNo(GameData.instance.earnedRewardsList[i].rewardNo), this);
+
             
+
             // 初期画像の設定
             if (rewardDetailList.Count == 0)
             {
-                imgReward.sprite = gameManager.GetRewardDataFromRewardNo(i).spriteReward;
+                imgReward.sprite = gameManager.GetRewardDataFromRewardNo(GameData.instance.earnedRewardsList[i].rewardNo).spriteReward;
+                //imgReward.sprite = gameManager.GetRewardDataFromRewardNo(i).spriteReward;
             }
 
             // 褒賞一覧のListに登録
