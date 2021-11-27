@@ -60,8 +60,15 @@ public class TapPointDetail : MonoBehaviour
         btnTapPoint.onClick.AddListener(OnClickTapPoint);
 
         this.gameManager = gameManager;
+
     }
-    
+
+    public void SetUpTapPointFromJobDataSO( List<JobData> jobDatasList)
+    {
+        jobData = jobDatasList.Find(x => x.jobNo == myjobNo);
+
+    }
+
     /// <summary>
     /// タップポイントをタップした際の処理
     /// </summary>
@@ -110,7 +117,10 @@ public class TapPointDetail : MonoBehaviour
     public void ChangeJobSprite()
     {
         imgTapPoint.sprite = jobSprite;
-        transform.localScale = new Vector3(1.75f, 1.0f, 1.0f);
+
+        ChangeActiveButton(false);
+
+        transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
         tween = transform.DOPunchPosition(new Vector3(10.0f, 0, 0), 3.0f, 10, 3)
             .SetEase(Ease.Linear)
@@ -141,8 +151,10 @@ public class TapPointDetail : MonoBehaviour
             //残り時間が0以下になったら
             if(currentJobTime <= 0)
             {
+                
                 KillTween();
                 IsJobs = false;
+                ChangeActiveButton(true);
                 //OfflineTimeManager.instance.RemoveWorkingJobTimeDatasList(jobData.jobNo);
             }
 
@@ -191,4 +203,9 @@ public class TapPointDetail : MonoBehaviour
     //{
       //  Instantiate(charaDetailPrefab,transform, false);
     //}
+
+    private void ChangeActiveButton(bool isActive)
+    {
+        btnTapPoint.enabled = isActive;
+    }
 }

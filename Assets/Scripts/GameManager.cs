@@ -39,8 +39,17 @@ public class GameManager : MonoBehaviour
 
     private AlbumPopUp albumPopUp;
 
+    [SerializeField]
+    private JobDataSO jobDataSO;
+
     void Start()
     {
+        for (int i = 0; i < tapPointDetailsList.Count; i++)
+        {
+            //TapPointDetailクラスの設定を行う
+            tapPointDetailsList[i].SetUpTapPointFromJobDataSO(jobDataSO.jobDatasList);
+        }
+
         // 褒賞データの最大数をGameDataクラスに登録
         GameData.instance.GetMaxRewardDataCount(rewardDataSO.rewardDatasList.Count);
 
@@ -53,16 +62,23 @@ public class GameManager : MonoBehaviour
             // 褒賞ポイントのロード
             GameData.instance.LoadTotalRewardPoint();
         }
-        
+
+
         // お使いの時間データの確認とロード
         OfflineTimeManager.instance.GetWorkingJobTimeDatasList(tapPointDetailsList);
-        
+
         //各TapPointDetailの設定
         TapPointSetUp();
 
+       
+        
+        
+
         btnAlbum.onClick.AddListener(OnClickAlbum);
     }
-    
+
+   
+
     /// <summary>
     /// 各TapPointDetailの設定。お使いの状況に合わせて、仕事中か仕事終了かを判断してキャラを生成するか、お使いを再開するか決定
     /// </summary>
@@ -214,6 +230,11 @@ public class GameManager : MonoBehaviour
 
         // 獲得した褒賞のセーブ
         GameData.instance.SaveEarnedReward(rewardData.rewardNo);
+
+        GameData.instance.RemoveEarnedRewardList();
+
+        //獲得した褒賞をロード
+        GameData.instance.LoadEarnedReward();
         
         // 褒賞ポイントのセーブ
         GameData.instance.SaveTotalRewardPoint();

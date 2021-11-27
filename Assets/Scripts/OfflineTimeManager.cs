@@ -193,7 +193,7 @@ public class OfflineTimeManager : MonoBehaviour
     public void RemoveWorkingJobTimeDatasList(int jobNo)
     {
         //対象のお使いを照合してリストから削除
-        workingJobTimeDatasList.Remove(workingJobTimeDatasList[jobNo]);
+        workingJobTimeDatasList.Remove(workingJobTimeDatasList.Find(x => x.jobNo == jobNo));
         
         //対象のお使いのセーブデータを削除
         PlayerPrefsHelper.RemoveObjectData(WORKING_JOB_SAVE_KEY + jobNo.ToString());
